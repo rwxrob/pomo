@@ -1,6 +1,7 @@
 package pomo
 
 import (
+	"math"
 	"time"
 
 	Z "github.com/rwxrob/bonzai/z"
@@ -167,9 +168,9 @@ var printCmd = &Z.Cmd{
 		sec := time.Second
 		left := endt.Sub(time.Now()).Round(sec)
 
-		var sub int64
+		var sub float64
 		if subc != "" {
-			sub = int64(left.Seconds()) % int64(subt.Seconds())
+			sub = math.Abs(math.Mod(left.Seconds(), subt.Seconds()))
 		}
 
 		if left < warnt && left%(sec*2) == 0 {
