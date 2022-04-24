@@ -34,7 +34,7 @@ var Cmd = &Z.Cmd{
 	Commands: []*Z.Cmd{
 		printCmd,                     // default
 		help.Cmd, vars.Cmd, conf.Cmd, // common
-		initCmd, startCmd,
+		initCmd, startCmd, stopCmd,
 	},
 	Shortcuts: Z.ArgMap{
 		`started`:    {`var`, `started`},
@@ -44,7 +44,7 @@ var Cmd = &Z.Cmd{
 		`prefixwarn`: {`var`, `set`, `prefixwarn`},
 	},
 	Summary:   `sets or prints a countdown timer (with tomato)`,
-	Version:   `v0.1.0`,
+	Version:   `v0.1.1`,
 	Copyright: `(c) Robert S. Muhlestein <rob@rwx.gg> (rwxrob.tv)`,
 	License:   `Apache-2.0`,
 	Source:    `https://github.com/rwxrob/pomo`,
