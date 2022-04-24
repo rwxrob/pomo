@@ -1,7 +1,7 @@
 package main
 
 import (
-	pomo "github.com/rwxrob/bonzai-pomo"
+	"github.com/rwxrob/pomo"
 )
 
 func main() {

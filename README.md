@@ -1,28 +1,55 @@
-# Pomodoro Timer Command in Go
+# 🌳 Go Pomodoro Command Line Timer
 
-**⚠ PORTING TO BONZAI CURRENTLY**
-
-🎉 ***Bonzai shamelessly requires Go 1.18+*** 💋
-
-[![Go Version](https://img.shields.io/github/go-mod/go-version/rwxrob/bonzai)](https://tip.golang.org/doc/go1.18)
-[![GoDoc](https://godoc.org/bonzai-pomo?status.svg)](https://godoc.org/bonzai-pomo)
+[![GoDoc](https://godoc.org/pomo?status.svg)](https://godoc.org/pomo)
 [![License](https://img.shields.io/badge/license-Apache2-brightgreen.svg)](LICENSE)
 [![Go Report
-Card](https://goreportcard.com/badge/bonzai-pomo)](https://goreportcard.com/report/bonzai-pomo)
+Card](https://goreportcard.com/badge/pomo)](https://goreportcard.com/report/pomo)
 
-## Install `pomo` as Standalone
+## Install
 
-The `pomo` command can be used as a standalone program
+This command can be installed as a standalone program or composed into a
+Bonzai command tree.
 
-```
-go install github.com/rwxrob/bonzai-pomo@latest
-```
-
-## Usage
+Standalone
 
 ```
-pomo help
+go install github.com/rwxrob/pomo/cmd/pomo@latest
 ```
+
+Composed
+
+```go
+package z
+
+import (
+	Z "github.com/rwxrob/bonzai/z"
+	"github.com/rwxrob/pomo"
+)
+
+var Cmd = &Z.Cmd{
+	Name:     `z`,
+	Commands: []*Z.Cmd{help.Cmd, pomo.Cmd},
+}
+```
+
+## Tab Completion
+
+To activate bash completion just use the `complete -C` option from your
+`.bashrc` or command line. There is no messy sourcing required. All the
+completion is done by the program itself.
+
+```
+complete -C pomo pomo
+```
+
+If you don't have bash or tab completion check use the shortcut
+commands instead.
+
+## Embedded Documentation
+
+All documentation (like manual pages) has been embedded into the source
+code of the application. See the source or run the program with help to
+access it.
 
 ## Add Pomodoro to TMUX
 

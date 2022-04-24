@@ -3,4 +3,9 @@ go 1.18
 use (
 	.
 	../bonzai
+	../conf
+	../help
+	../term
+	../to
+	../vars
 )
