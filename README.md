@@ -7,8 +7,9 @@ Card](https://goreportcard.com/badge/pomo)](https://goreportcard.com/report/pomo
 
 ## Install
 
-This command can be installed as a standalone program or composed into a
-Bonzai command tree.
+You can just grab the latest binary [release](https://github.com/rwxrob/pomo/releases).
+
+This command can be installed as a standalone program or composed into a Bonzai command tree.
 
 Standalone
 
