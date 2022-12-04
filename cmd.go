@@ -6,6 +6,7 @@ import (
 
 	Z "github.com/rwxrob/bonzai/z"
 	"github.com/rwxrob/conf"
+	"github.com/rwxrob/dtime"
 	"github.com/rwxrob/help"
 	"github.com/rwxrob/term"
 	"github.com/rwxrob/to"
@@ -45,7 +46,7 @@ var Cmd = &Z.Cmd{
 		`prefixwarn`: {`var`, `set`, `prefixwarn`},
 	},
 	Summary:   `sets or prints a countdown timer (with tomato)`,
-	Version:   `v0.1.1`,
+	Version:   `v0.2.0`,
 	Copyright: `(c) Robert S. Muhlestein <rob@rwx.gg> (rwxrob.tv)`,
 	License:   `Apache-2.0`,
 	Source:    `https://github.com/rwxrob/pomo`,
@@ -190,10 +191,25 @@ var printCmd = &Z.Cmd{
 var startCmd = &Z.Cmd{
 	Name:     `start`,
 	Summary:  `start the current pomo timer`,
+	Usage:    `[help|hour|DURATION]`,
 	Commands: []*Z.Cmd{help.Cmd},
+	Params:   []string{`hour`, `hr`},
 	MaxArgs:  1,
+
+	Description: `
+		The {{aka}} command starts a pomo timer with an optional new
+		DURATION. The special {{pre "hour"}} or {{pre "hr"}} parameter can
+		be passed to calculate the duration to the beginning of the next
+		hour.
+
+	`,
+
 	Call: func(x *Z.Cmd, args ...string) error {
 		if len(args) > 0 {
+			if args[0] == `hour` || args[0] == `hr` {
+				t := time.Now()
+				args[0] = dtime.Until(dtime.NextHourOf, &t).String()
+			}
 			if err := x.Caller.Set("duration", args[0]); err != nil {
 				return err
 			}
