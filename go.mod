@@ -9,7 +9,7 @@ require (
 	github.com/rwxrob/help v0.7.0
 	github.com/rwxrob/term v0.2.9
 	github.com/rwxrob/to v0.12.1
-	github.com/rwxrob/vars v0.6.1
+	github.com/rwxrob/vars v0.6.2
 )
 
 require (

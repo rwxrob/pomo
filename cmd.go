@@ -46,7 +46,7 @@ var Cmd = &Z.Cmd{
 		`prefixwarn`: {`var`, `set`, `prefixwarn`},
 	},
 	Summary:   `sets or prints a countdown timer (with tomato)`,
-	Version:   `v0.2.1`,
+	Version:   `v0.2.2`,
 	Copyright: `(c) Robert S. Muhlestein <rob@rwx.gg> (rwxrob.tv)`,
 	License:   `Apache-2.0`,
 	Source:    `https://github.com/rwxrob/pomo`,
