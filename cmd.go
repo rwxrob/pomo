@@ -39,6 +39,8 @@ var Cmd = &Z.Cmd{
 		initCmd, startCmd, stopCmd,
 	},
 	Shortcuts: Z.ArgMap{
+		`delete`:     {`var`, `delete`},
+		`unset`:      {`var`, `unset`},
 		`get`:        {`var`, `get`},
 		`started`:    {`var`, `started`},
 		`duration`:   {`var`, `set`, `duration`},
@@ -162,6 +164,17 @@ var printCmd = &Z.Cmd{
 
 		if left < warnt && left%(sec*2) == 0 {
 			prefix = prefixwarn
+		}
+
+		autoreset, err := x.Caller.Get(`autoreset`)
+		if err != nil {
+			return err
+		}
+
+		if autoreset == `hour` && left < 0 {
+			if err := startCmd.Call(x, `hour`); err != nil {
+				return err
+			}
 		}
 
 		if subc != "" {
