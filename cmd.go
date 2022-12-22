@@ -39,44 +39,28 @@ var Cmd = &Z.Cmd{
 		initCmd, startCmd, stopCmd,
 	},
 	Shortcuts: Z.ArgMap{
+		`get`:        {`var`, `get`},
 		`started`:    {`var`, `started`},
 		`duration`:   {`var`, `set`, `duration`},
 		`warn`:       {`var`, `set`, `warn`},
 		`prefix`:     {`var`, `set`, `prefix`},
 		`prefixwarn`: {`var`, `set`, `prefixwarn`},
+		`autoreset`:  {`var`, `set`, `autoreset`},
 	},
-	Summary:   `sets or prints a countdown timer (with tomato)`,
-	Version:   `v0.2.2`,
-	Copyright: `(c) Robert S. Muhlestein <rob@rwx.gg> (rwxrob.tv)`,
-	License:   `Apache-2.0`,
-	Source:    `https://github.com/rwxrob/pomo`,
-	Issues:    `https://github.com/rwxrob/pomo/issues`,
-
-	Description: `
-		The {{cmd .Name}} command is a simple tool to help people follow the  
-	  Pomodoro method of time boxing. Many add 
-		{{print "#(" .Name ")" | pre }}
-		to their {{cmd "tmux"}} status lines and turn up the
-		refresh to one second.`,
+	Version:     `v0.2.3`,
+	Copyright:   `(c) Robert S. Muhlestein <rob@rwx.gg> (rwxrob.tv)`,
+	License:     `Apache-2.0`,
+	Source:      `https://github.com/rwxrob/pomo`,
+	Issues:      `https://github.com/rwxrob/pomo/issues`,
+	Summary:     help.S(_pomo),
+	Description: help.D(_pomo),
 }
 
 var initCmd = &Z.Cmd{
-	Name:     `init`,
-	Summary:  `sets all values to defaults`,
-	Commands: []*Z.Cmd{help.Cmd},
-
-	Description: `
-		The {{cmd .Name}} command sets all cached variables to their initial
-		values. Any variable name from {{cmd "conf"}} will be used to
-		initialize if defined.  Otherwise, the following hard-coded package
-		globals will be used instead:
-
-		    duration    - {{dduration}}
-		    interval    - {{dinterval}}
-		    warn        - {{dwarn}}
-		    prefix      - {{dprefix}}
-		    prefixwarn  - {{dprefixwarn}}
-	`,
+	Name:        `init`,
+	Commands:    []*Z.Cmd{help.Cmd},
+	Summary:     help.S(_init),
+	Description: help.D(_init),
 
 	Call: func(x *Z.Cmd, _ ...string) error {
 
@@ -115,10 +99,12 @@ var initCmd = &Z.Cmd{
 }
 
 var printCmd = &Z.Cmd{
-	Name:     `print`,
-	Aliases:  []string{`show`, `p`},
-	Summary:  `print current to standard output (default)`,
-	Commands: []*Z.Cmd{help.Cmd},
+	Name:        `print`,
+	Aliases:     []string{`show`, `p`},
+	Commands:    []*Z.Cmd{help.Cmd},
+	Summary:     help.S(_print),
+	Description: help.D(_print),
+
 	Call: func(x *Z.Cmd, _ ...string) error {
 
 		started, err := x.Caller.Get(`started`)
@@ -189,24 +175,17 @@ var printCmd = &Z.Cmd{
 }
 
 var startCmd = &Z.Cmd{
-	Name:     `start`,
-	Summary:  `start the current pomo timer`,
-	Usage:    `[help|hour|DURATION]`,
-	Commands: []*Z.Cmd{help.Cmd},
-	Params:   []string{`hour`, `hr`},
-	MaxArgs:  1,
-
-	Description: `
-		The {{aka}} command starts a pomo timer with an optional new
-		DURATION. The special {{pre "hour"}} or {{pre "hr"}} parameter can
-		be passed to calculate the duration to the beginning of the next
-		hour.
-
-	`,
+	Name:        `start`,
+	Usage:       `[help|hour|DURATION]`,
+	Commands:    []*Z.Cmd{help.Cmd},
+	Params:      []string{`hour`},
+	MaxArgs:     1,
+	Summary:     help.S(_start),
+	Description: help.D(_start),
 
 	Call: func(x *Z.Cmd, args ...string) error {
 		if len(args) > 0 {
-			if args[0] == `hour` || args[0] == `hr` {
+			if args[0] == `hour` {
 				t := time.Now()
 				args[0] = dtime.Until(dtime.NextHourOf, &t).String()
 			}
@@ -231,9 +210,11 @@ var startCmd = &Z.Cmd{
 }
 
 var stopCmd = &Z.Cmd{
-	Name:     `stop`,
-	Summary:  `stop the current pomo timer`,
-	Commands: []*Z.Cmd{help.Cmd},
+	Name:        `stop`,
+	Commands:    []*Z.Cmd{help.Cmd},
+	Summary:     help.S(_stop),
+	Description: help.D(_stop),
+
 	Call: func(x *Z.Cmd, args ...string) error {
 		x.Caller.Del("started")
 		return nil
